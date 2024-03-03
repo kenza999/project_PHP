@@ -1,0 +1,38 @@
+RewriteEngine On
+
+# Règles de réécriture d'URL :
+
+    # Exclure tous les fichiers et dossiers du répertoire "assets" de la réécriture
+    RewriteCond %{REQUEST_URI} ^/public/ [OR]
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    RewriteRule ^404$ errors/404.php
+    RewriteRule ^403$ /errors/403.php
+
+# pour les routes
+
+#La règle de réécriture RewriteRule ^$ est utilisée pour rediriger l'URL racine vers une autre page ou une autre URL. Le ^$ signifie que la règle s'appliquera uniquement lorsque l'URL demandée est la racine du site, c'est-à-dire lorsqu'il n'y a rien après le nom de domaine dans l'URL.
+
+#[L] signifie "Last" (dernière) et indique que si la règle actuelle est appliquée, c'est la dernière règle qui sera évaluée, et aucune autre règle de réécriture ne sera exécutée. Cela peut être utile pour éviter que des règles ultérieures interfèrent avec la règle actuelle.
+
+
+# Si la requête commence par "/admin/", utilisez "admin/" dans la chaîne de requête
+RewriteRule ^admin/?$                             index.php?doc=admin [L,QSA]
+RewriteRule ^admin/(\w+)/?$                       index.php?doc=admin&controller=$1 [L,QSA]
+RewriteRule ^admin/(\w+)/(\w+)$                   index.php?doc=admin&controller=$1&method=$2 [L,QSA]
+RewriteRule ^admin/(\w+)/(\w+)/(\S+)$             index.php?doc=admin&controller=$1&method=$2&id=$3 [L,QSA]
+
+RewriteRule ^$                              index.php [L]
+
+#[QSA] signifie "Query String Append" (ajout de la chaîne de requête) et indique que la chaîne de requête (c'est-à-dire les paramètres d'URL après le point d'interrogation ?) de l'URL d'origine doit être conservée et ajoutée à l'URL réécrite. Cela est couramment utilisé pour conserver les paramètres d'URL lors de la réécriture.
+
+RewriteRule ^(\w+)/?$                       index.php?controller=$1 [L,QSA]
+RewriteRule ^(\w+)/(\w+)$                   index.php?controller=$1&method=$2 [L,QSA]
+#\d+ pour capturer toutes les valeurs numériques
+#RewriteRule ^(\w+)/(\w+)/(\d+)$             index.php?controller=$1&method=$2&id=$3 [L,QSA]
+#\S+ pour capturer tout sauf les espaces
+RewriteRule ^(\w+)/(\w+)/(\S+)$             index.php?controller=$1&method=$2&id=$3 [L,QSA]
+
+
+
