@@ -28,9 +28,9 @@ var_dump($userfind);
                             <th>nom</th>
                             <th>Email</th>
                             <th>Date de naissance</th>
-                            <!-- <th>Adresse</th>
+                            <th>Adresse</th>
                             <th>Ville</th>
-                            <th>Code postal</th> -->
+                            <th>Code postal</th> 
                             <th>Numero de téléphone</th>
                             <th>Numero de SIRET</th>
                             <th>Genre</th>

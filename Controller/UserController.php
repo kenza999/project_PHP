@@ -32,14 +32,18 @@ if ($this->isUserConnected()) {
             break;
         case ROLE_ENTREPRISE:
             // Afficher la vue du tableau de bord pour l'entreprise
-            $this->render("user/dashboard_client.html.php", [
+            $this->render("client/dashboard_client.html.php", [
                 "h1" => "Tableau de bord"
             ]);
             break;
-        case ROLE_ADMIN:
-            // Afficher la vue du tableau de bord pour l'administrateur
+        case ROLE_ADMIN:           
+            $users = $this->userRepository->findAll($this->user);
+            $countUser = $this->userRepository->incrementUserCount($users);
+         // Afficher la vue du tableau de bord pour l'administrateur
             $this->render("admin/dashboard_admin.html.php", [
-                "h1" => "Tableau de bord"
+                "h1" => "Tableau de bord",
+                "countUser" => $countUser,
+                "users" => $users
             ]);
             break;
         default:
@@ -60,25 +64,27 @@ if ($this->isUserConnected()) {
         ]);
     }
 
-    public function register()
+    public function new()
     {
         $user = $this->user;
-        $this->registrationForm->handleInsertForm($user);
+        $this->form->handleInsertForm($user);
 
-        if ($this->registrationForm->isSubmitted() && $this->registrationForm->isValid()) {
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            
             $this->userRepository->insertUser($user);
-            $this->setMessage("success", "Inscription réussie. Vous pouvez maintenant vous connecter.");
-            return redirection(addLink("User", "login")); // Rediriger vers la page de connexion
+            return redirection(addLink("Accueil"));
         }
 
-        $errors = $this->registrationForm->getErrorsForm();
-
-        $this->render("registration_form.php", [
-            "h1" => "Inscription",
+        $errors = $this->form->getErrorsForm();
+        
+        return $this->render("user/form.html.php", [
+            "h1" => "Ajouter un nouvel utilisateur",
             "user" => $user,
             "errors" => $errors
         ]);
     }
+
+    
          public function show($id)
      {
          if ($id) {
@@ -97,6 +103,7 @@ if ($this->isUserConnected()) {
              "h1" => "Fiche user"
          ]);
      }
+
 
     public function login()
     {
@@ -128,13 +135,63 @@ if ($this->isUserConnected()) {
 
         // Récupérer les erreurs du formulaire s'il y en a
         $errors = $this->registrationForm->getErrorsForm();
+        return $this->render("security/login.html.php", [
 
         // Afficher le formulaire de connexion avec les erreurs
-        return $this->render("security/login.html.php", [
             "h1" => "Entrez vos identifiants de connexion",
             "errors" => $errors
         ]);
     }
+    public function delete($id)
+     {
+         if (!empty($id) && $id && $this->getUser()) {
+             if (is_numeric($id)) {
+
+                 $user = $this->user;
+             } else {
+                 $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+             }
+         } else {
+             $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+         }
+
+         $this->render("registration_form.html.php", [
+             "h1" => "Suppresion de l'user n°$id ?",
+             "user" => $user,
+             "mode" => "suppression"
+         ]);
+     }
+     public function profile()
+    {
+    
+            if ($this->isUserConnected()) { 
+                $user = $this->getUser();
+             if (empty($user)) {
+         $this->setMessage("danger", "L'utilisateur n'existe pas");
+            redirection(addLink("Accueil"));
+      }
+      }
+            $this->render("profile.html.php", [
+            "user" => $user,
+            "h1" => "Fiche user"
+     ]);
+    }
+    public function siret()
+    {
+    
+            if ($this->isUserConnected()) { 
+                $user = $this->getUser();
+             if (empty($user)) {
+         $this->setMessage("danger", "L'utilisateur n'existe pas");
+            redirection(addLink("Accueil"));
+      }
+      }
+            $this->render("siret.html.php", [
+            "user" => $user,
+            "h1" => "Fiche user"
+     ]);
+    }
+
 
     public function logout()
     {

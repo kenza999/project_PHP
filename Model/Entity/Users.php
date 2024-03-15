@@ -4,13 +4,13 @@ namespace Model\Entity;
 
 class Users extends BaseEntity
 {   
-    private $id;
+   
     private $username;    
     private $nom;
     private $email;
     private $numero_telephone;
     private $password_hash;
-    private $created_at;
+    // private $created_at;
     private $date_de_naissance;
     private $genre;
     private $photo;
@@ -20,6 +20,12 @@ class Users extends BaseEntity
     private $carte_didentite;
     private $role;
     private $numero_siret;
+    private $ville;
+    private $code_postal;
+    private $adresse;
+    private $metier;
+   
+    
 
 
     /**
@@ -344,4 +350,110 @@ class Users extends BaseEntity
 
         return $this;
     }
+
+    /**
+     * Get the value of is_deleted
+     */ 
+    public function getIs_deleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set the value of is_deleted
+     *
+     * @return  self
+     */ 
+    public function setIs_deleted($is_deleted)
+    {
+        $this->is_deleted = $is_deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of adresse
+     */ 
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set the value of adresse
+     *
+     * @return  self
+     */ 
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of code_postal
+     */ 
+    public function getCode_postal()
+    {
+        return $this->code_postal;
+    }
+
+    /**
+     * Set the value of code_postal
+     *
+     * @return  self
+     */ 
+    public function setCode_postal($code_postal)
+    {
+        $this->code_postal = $code_postal;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ville
+     */ 
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set the value of ville
+     *
+     * @return  self
+     */ 
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of metier
+     */ 
+    public function getMetier()
+    {
+        return $this->metier;
+    }
+
+    /**
+     * Set the value of metier
+     *
+     * @return  self
+     */ 
+    public function setMetier($metier)
+    {
+        $this->metier = $metier;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of NbUsers
+     */ 
+   
 }

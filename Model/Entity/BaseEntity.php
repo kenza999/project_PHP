@@ -4,10 +4,10 @@ namespace Model\Entity;
 
 abstract class BaseEntity
 {
-    // private $id;
-    // private $created_at;
-    // private $updated_at;
-    // private $is_deleted;
+       protected $id;
+       protected $created_at;
+       protected $updated_at;
+       protected $is_deleted;
 
 
     public function __toString()

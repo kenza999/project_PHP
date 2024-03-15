@@ -1,0 +1,171 @@
+<?php
+namespace Controller;
+
+use Controller\BaseController;
+use Model\Repository\ProposalsRepository;
+use Form\ProposalsHandleRequest;
+use Model\Entity\Users;
+use Model\Entity\ClientFreelanceRelations;
+use Model\Entity\Proposals;
+
+class ProposalsController extends BaseController
+{
+    private ProposalsRepository $proposalsRepository;
+    private ProposalsHandleRequest $form;
+    private Users $user;
+    private ClientFreelanceRelations $clientFreelanceRelations;
+    private Proposals $proposals;
+  
+    public function __construct()
+    {
+        $this->proposalsRepository = new ProposalsRepository;
+        $this->form = new ProposalsHandleRequest;
+        $this->user = new Users;
+        $this->clientFreelanceRelations = new ClientFreelanceRelations;
+        $this->proposals = new Proposals;
+    }
+
+    public function listProposals()
+    {
+        $proposals = $this->proposalsRepository->getAllProposals(null, null);
+        
+        $this->render("listProposals.html.php", [
+            "h1" => "Liste des propositions",
+            "proposals" => $proposals
+        ]);
+    }
+
+    public function new()
+    {
+        // Votre code pour la création d'une nouvelle proposition
+    }
+
+    public function show($id)
+    {
+        if (!empty($id) && is_numeric($id)) {
+            $proposalRepository = new ProposalsRepository(); // Correction ici
+            $proposal = $proposalRepository->findById('proposal', $id);
+            
+            if (empty($proposal)) {
+                $this->setMessage("danger", "La proposition #$id n'existe pas");
+                redirection(addLink("Accueil"));
+            }
+            
+            $this->render("proposal/show.html.php", [
+                "proposal" => $proposal,
+                "h1" => "Fiche proposition"
+            ]);
+        } else {
+            error("404.php");
+        }
+    }
+
+    public function addProposals()
+    {
+            $proposal = $this->proposals;
+            
+            $this->form->handleInsertForm($proposal);
+
+            if ($this->form->isSubmitted() && $this->form->isValid()) {
+
+            $this->proposalsRepository->addProposal($proposal);
+            $this->setMessage("success", "Proposition ajoutée");
+            return redirection(addLink("User","dashboard_client"));
+
+
+            }
+                $errors = $this->form->getErrorsForm();
+            
+
+            $this->render("client\addProposals.html.php", [
+                "h1" => "Ajouter une proposition",
+                "proposal" => $proposal,
+                "errors" => $errors
+
+            ]);
+   
+    }
+}
+
+
+
+
+
+// /**
+//  * Summary of namespace Controller
+//  */
+
+// namespace Controller;
+
+
+// use Controller\BaseController;
+// use Model\Entity\Proposals;
+// use Model\Entity\users;
+// use Model\Entity\clientfreelancerelations;
+// use Form\ProposalsHandleRequest;
+// use Model\Repository\ProposalsRepository;
+// use Model\Repository\UsersRepository;
+// use Service\ImageHandler;
+
+// /**
+//  * Summary of ProductController
+//  */
+
+// class ProposalsController extends BaseController
+// {
+//     private ProposalsRepository $proposalsRepository;
+//     private ProposalsHandleRequest $form;
+//     private Proposals $proposals;
+//     private Users $User;
+//     private clientfreelancerelations $clientfreelancerelations;
+//     // private UserRepository $UserRepository;
+  
+    
+//     public function __construct()
+//     {
+//         $this->proposalsRepository = new ProposalsRepository;
+//         $this->form = new ProposalsHandleRequest;
+//         $this->proposals = new Proposals;
+//         $this->User = new Users;
+//         $this->clientfreelancerelations = new clientfreelancerelations;
+//         // $this->UserRepository = new UserRepository;
+//     }
+
+
+//     public function listProposals()
+//     {
+//         // Traitement pour afficher la liste des propositions
+//         $User = $this->User;
+//         $client = $this->clientfreelancerelations;
+//         $proposals = $this->proposalsRepository->getAllProposals();
+
+//         $this->render("listProposals.html.php", [
+//             "h1" => "Liste des propositions",
+//             "proposals" => $proposals
+//         ]);
+//     }
+//     public function new(){
+        
+//     }
+//     public function show($id)
+//     {
+//         if (!empty($id) && is_numeric($id)) {
+//             $proposalRepository = new ProposalRepository();
+//             $proposal = $proposalRepository->findById('proposal', $id);
+            
+//             if (empty($proposal)) {
+//                 $this->setMessage("danger", "La proposition #$id n'existe pas");
+//                 redirection(addLink("Accueil"));
+//             }
+            
+//             $this->render("proposal/show.html.php", [
+//                 "proposal" => $proposal,
+//                 "h1" => "Fiche proposition"
+//             ]);
+//         } else {
+//             error("404.php");
+//         }
+//     }
+// }
+
+

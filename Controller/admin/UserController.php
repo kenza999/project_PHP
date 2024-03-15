@@ -19,6 +19,28 @@ class UserController extends BaseController{
         $this->form = new UserHandleRequest;
         $this->user = new Users;
     }
+
+    public function dashboard_admin()
+    {
+    // Vérifier si l'utilisateur est connecté
+if ($this->isUserConnected()) {
+    switch ($this->getUser()->getRole()) {
+        case ROLE_ADMIN:
+            // Afficher la vue du tableau de bord pour l'administrateur
+            $this->render("admin/dashboard_admin.html.php", [
+                "h1" => "Tableau de bord"
+            ]);
+            break;
+        default:
+            // Rediriger vers la page de connexion si le rôle n'est pas défini
+            return redirection(addLink("user", "login"));
+    }
+} else {
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    return redirection(addLink("user", "login"));
+}
+
+    }
     
     public function list()
      {
@@ -79,25 +101,53 @@ class UserController extends BaseController{
         return redirection("/errors/404.php");
     }
 
-    public function delete($id)
-    {
-        if (!empty($id) && $id && $this->getUser()) {
-            if (is_numeric($id)) {
-
-                $user = $this->user;
+    public function isAdmin($id)
+{
+    // Vérifier si l'utilisateur connecté a le droit de supprimer un utilisateur
+    if ($this->getAdmin()) {
+        // Supprimer l'utilisateur de la base de données
+        if (!empty($id) && is_numeric($id)) {
+            if ($this->userRepository->setIsDeletedTrueById("users")) {
+                $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
             } else {
-                $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+                $this->setMessage("danger", "Une erreur s'est produite lors de la suppression de l'utilisateur.");
             }
         } else {
-            $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+            $this->setMessage("danger", "L'utilisateur à supprimer n'a pas été trouvé.");
         }
-
-        $this->render("user/form.html.php", [
-            "h1" => "Suppresion de l'user n°$id ?",
-            "user" => $user,
-            "mode" => "suppression"
-        ]);
+    } else {
+        $this->setMessage("danger", "Vous n'avez pas les autorisations nécessaires pour supprimer un utilisateur.");
     }
+
+    // Rediriger vers la liste des utilisateurs après la suppression
+    return redirection(addLink("admin", "user", "verificationUser"));
+}
+
+    // public function delete($id)
+    // {
+    //         // Vérifier si l'utilisateur connecté a le droit de supprimer un utilisateur
+    // if ($this->isAdmin()) {
+    //     // Supprimer l'utilisateur de la base de données
+    //     if (!empty($id) && is_numeric($id)) {
+    //         if ($this->userRepository->deleteUser($id)) {
+    //             $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
+    //         } else {
+    //             $this->setMessage("danger", "Une erreur s'est produite lors de la suppression de l'utilisateur.");
+    //         }
+    //     } else {
+    //         $this->setMessage("danger", "L'utilisateur à supprimer n'a pas été trouvé.");
+    //     }
+    // } else {
+    //     $this->setMessage("danger", "Vous n'avez pas les autorisations nécessaires pour supprimer un utilisateur.");
+    // }
+    //     $this->render("registration_form.html.php", [
+    //         "h1" => "Suppresion de l'user n°$id ?",
+    //         "user" => $user,
+    //         "mode" => "suppression"
+    //     ]);
+    // }
+
+
     public function show($id)
     {
         if ($id) {

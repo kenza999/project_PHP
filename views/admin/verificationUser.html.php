@@ -1,6 +1,3 @@
-<?php
-var_dump($user);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,9 +41,10 @@ var_dump($user);
                         <td><?= $verifications->getNationalite() ?></td>
                         <td><?= $verifications->getDescription_dutilisateur()?></td>
                         <td>
-                            <!-- Ajoutez ici les boutons ou les liens d'action -->
-                 
-                            <!-- <a class="btn btn-success" href="delete_user.php?id=<?= $verifications->getId()?>">Verifier</a> -->
+                            
+                           <a href="<?= addLink("admin", "user", "update").'/'.$verifications->getId()?>" class="btn btn-primary btn-sm me-2">
+                            <i class="fas fa-edit"></i> Verification
+                        </a> 
                         </td>
                     </tr>
                 <?php endforeach; ?>

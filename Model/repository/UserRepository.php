@@ -4,7 +4,7 @@ namespace Model\Repository;
 
 use Model\Entity\Users;
 use Service\Session;
-use Service\User;
+
 
 class UserRepository extends BaseRepository
 {
@@ -24,7 +24,7 @@ class UserRepository extends BaseRepository
             return null;
         }
     }
-    public function checkUserExist($nom, $email)
+    public function checkUserExist($email)
 {
     $request = $this->dbConnection->prepare("SELECT COUNT(*) FROM users WHERE email = :email ");
 
@@ -37,11 +37,10 @@ class UserRepository extends BaseRepository
 
 public function insertUser(Users $user)
 {
-    try{
-
-    
-    $sql = "INSERT INTO users (username, nom, email, password_hash, carte_didentite, date_de_naissance, genre, photo, description_dutilisateur, nationalite, verificationUser, role, numero_telephone, numero_siret) VALUES (:username, :nom, :email, :password_hash, :carte_didentite, :date_de_naissance, :genre, :photo, :description_dutilisateur, :nationalite,  :verificationUser, :role, :numero_telephone , :numero_siret)";
-    $request = $this->dbConnection->prepare($sql);
+    try {
+        $sql = "INSERT INTO users (username, nom, email, password_hash, carte_didentite, date_de_naissance, genre, photo, description_dutilisateur, nationalite, verificationUser, role, numero_telephone, numero_siret, adresse, ville, code_postal, metier, created_at) VALUES (:username, :nom, :email, :password_hash, :carte_didentite, :date_de_naissance, :genre, :photo, :description_dutilisateur, :nationalite,  :verificationUser, :role, :numero_telephone , :numero_siret, :adresse, :ville, :code_postal, :metier, NOW())";
+        $request = $this->dbConnection->prepare($sql);
+        
     $request->bindValue(":username", $user->getUsername());
     $request->bindValue(":nom", $user->getNom());
     $request->bindValue(":email", $user->getEmail());
@@ -56,19 +55,26 @@ public function insertUser(Users $user)
     $request->bindValue(":nationalite", $user->getNationalite());
     $request->bindValue(":role", $user->getRole());  
     $request->bindValue(":verificationUser", $user->getVerificationUser());
+    $request->bindValue(":adresse", $user->getAdresse());
+    $request->bindValue(":ville", $user->getVille());
+    $request->bindValue(":code_postal", $user->getCode_postal());
+    $request->bindValue(":metier", $user->getMetier());
+
+
     
     
     $result = $request->execute();
-    if ($result) {
-        if ($result == 1){
+    if ( $result) {
+        if ($request == 1){
             Session::addMessage("success", "Le nouvel utilisateur a bien été enregistré");
             return true;
         }
         Session::addMessage("danger", "Erreur : l'utilisateur n'a pas été enregistré");
         return false;
     }
-    Session::addMessage("danger", "Erreur SQL");
+    Session::addMessage("danger",  "Erreur SQL");
     return null;
+
     }catch (PDOException $e){
         die($e->getMessage());
     }
@@ -84,6 +90,7 @@ public function updateUser(Users $user)
     $request->bindValue(":password_hash", $user->getPassword_hash());
     $request->bindValue(":carte_didentite", $user->getCarte_didentite());
     $request->bindValue(":date_de_naissance", $user->getDateDeNaissance());
+    $request->bindValue(":metier", $user->getMetier());  
     $request->bindValue(":genre", $user->getGenre());
     $request->bindValue(":photo", $user->getPhoto());
     $request->bindValue(":description_dutilisateur", $user->getDescriptionDutilisateur());
@@ -133,6 +140,22 @@ public function getUserVerification(){
     } catch (PDOException $e) {
         // Gérer l'erreur ou la logger
         error_log("Erreur lors de la récupération des users non lues : " . $e->getMessage());
+    }
+}
+public function incrementUserCount($data) {
+    try {
+        for($i = 0; $i < count($data); $i++){
+            $i += 1;
+        }
+        return $i;
+        // $stmt = $this->dbConnection->prepare("SELECT COUNT(*) as NbUsers FROM users");
+        // $stmt->execute();        
+        // $row = $stmt->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
+        // return $row; 
+    } catch (\PDOException $e) {
+        // Gérer l'exception ici
+        return false; // Échec
+        error_log("Erreur lors de la récupération des users : " . $e->getMessage());
     }
 }
 public function checkUser(){

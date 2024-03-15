@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../public/assets/css/styles.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -47,6 +48,22 @@
                                 <label for="date_de_naissance" class="sr-only">Date de naissance :</label>
                                 <input type="date" id="date_de_naissance" name="date_de_naissance" class="form-control my-2" placeholder="Date de naissance" required>
                             </div>
+                            <div>
+                                <!-- adresse -->
+                                <label for="adresse" class="sr-only">Adresse :</label>
+                                <input type="text" id="adresse" name="adresse" class="form-control my-2" placeholder="Adresse" required>
+                            </div>
+                            <div>
+                                <!-- code postal -->
+                                <label for="code_postal" class="sr-only">Code postal :</label>
+                                <input type="text" id="code_postal" name="code_postal" class="form-control my-2" placeholder="Code postal" required>
+                            </div>
+                            <div>
+                                <!-- ville -->
+                                <label for="ville" class="sr-only">Ville :</label>
+                                <input type="text" id="ville" name="ville" class="form-control my-2" placeholder="Ville" required>
+                            </div>
+                            </div>
                             <div class="form-group">
                                 <label for="genre" class="sr-only">Genre :</label>
                                 <select id="genre" name="genre" class="form-control my-2">
@@ -65,11 +82,11 @@
                             <div class="form-group">
                                 <label for="description_dutilisateur" class="sr-only">Description :</label>
                                 <textarea id="description_dutilisateur" name="description_dutilisateur" class="form-control my-2" placeholder="Description" required></textarea>
-                            </div>
+                              </div>
                             <!-- <?// foreach($listeCompetences as  $competence){?>  -->
                             <!-- <input type="checkbox" value="<?php// echo $competence['competenceID']?>" name="competences[]" ><br/> -->
                             <!-- <label for=""><?php //echo $competence['nom_competence']?></label><br> -->
-                            <?php// }?> 
+                              <?php// }?> 
                             <label for="">Quel type de compte souhaitez-vous créer ?</label>
                                 <select name="role" id="">
                                     <option value="ROLE_ENTREPRISE">Entreprise</option>
@@ -105,8 +122,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-block mt-3">Créer le compte</button>
 
-             
-               
+             </form>
+               <script></script>
                 <!-- Bootstrap JS and Popper.js (if needed) -->
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.6/dist/umd/popper.min.js"></script>

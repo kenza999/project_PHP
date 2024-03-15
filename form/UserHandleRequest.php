@@ -69,15 +69,22 @@ class UserHandleRequest extends BaseHandleRequest
                 $user->setEmail($email);
                 $user->setPassword_hash($password_hash);                
                 $user->setCarte_didentite($carte_didentite ?? null);
-                $user->setDate_de_naissance($date_de_naissance ?? null);
+                $user->setDate_de_naissance($date_de_naissance ?? null);               
                 $user->setNumero_siret($numero_siret ?? null);
                 $user->setNumero_telephone($numero_telephone?? null);
                 $user->setGenre($genre ?? null);
                 $user->setPhoto($photo ?? null);
                 $user->setDescription_dutilisateur($description_dutilisateur ?? null);
                 $user->setNationalite($nationalite ?? null);
-                $user->setVerificationUser(0);
+                $user->setVerificationUser($verificationUser = "En Attente");
                 $user->setRole($role);
+                $user->setVille($ville?? null);
+                $user->setCode_postal($code_postal?? null);
+                $user->setAdresse($adresse?? null);
+                $user->setMetier($metier?? null);
+                
+
+
                 
                 // if(isset($role)){
 

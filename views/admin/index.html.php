@@ -47,10 +47,13 @@
                     <td><?= $user->getPassword_hash() ? "****" : "" ?></td>
                     <td><?= $user->getNom() . " " . $user->getUsername() ?></td>
                     <td>
-                        <a href="<?= addLink("users", "update", $user->getId()) ?>" class="btn btn-primary btn-sm me-2">
-                            <i class="fas fa-edit"></i> Modifier
-                        </a>
-                        <a href="<?= addLink("users", "delete", $user->getId()) ?>" class="btn btn-danger btn-sm me-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+<form action="" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+    <button type="submit" class="btn btn-danger btn-sm me-2">
+        <i class="fas fa-trash"></i> Supprimer
+    </button>
+</form>
+
+<a href="<?= addLink("admin", "user", "isAdmin").'/'.$user->getId() ?>" class="btn btn-danger btn-sm me-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
                             <i class="fas fa-trash"></i> Supprimer
                         </a>
                         <a href="<?= addLink("admin","user", "show").'/'.$user->getId()?>" class="btn btn-info btn-sm">

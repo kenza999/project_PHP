@@ -126,11 +126,11 @@ hr{
 <div class="sidebar">
             <br><br>
         <p>Tableau de Bord</p>
-    <a href="#messages">Messages</a>
+    <a href="<?= addLink("user","profile")?>">Profile</a>
     <a href="#ameliorer-profil">Améliorer Mon Profil</a>
-    <a href="index.php?page=addProposal">Gérer Mes Missions</a>
+    <a href="<?= addLink("Proposals","listProposals")?>">Gérer Mes Missions</a>
     <a href="#factures-paiements">Factures et Paiements</a>
-    <a href="#mon-entreprise">Mon Entreprise</a>
+    <a href="<?= addLink("user","siret")?>">Mon Entreprise</a>
     <a href="<?= addLink("user","logout")?>">Mon Compte</a>
         <hr>
     <a href="<?= addLink("user","logout")?>">Se déconnecter</a>
@@ -149,21 +149,7 @@ hr{
     </header> 
   
 <div class="job-listings">
-        <?php 
-        if (isset($proposals)) {
-            foreach ($proposals as $proposal): 
-                ?>
-                <div class="proposal">
-                    <h2><?php echo htmlspecialchars($proposal['title']); ?></h2>
-                    <p><?php echo htmlspecialchars($proposal['description']); ?></p>
-                    <!-- Plus de détails... -->
-                </div>
-                <?php 
-            endforeach;
-        } else {
-            echo "Aucune proposition disponible.";
-        }
-        ?>
+
     </div>
 </body>
 </html>
