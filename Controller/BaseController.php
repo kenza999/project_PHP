@@ -15,6 +15,15 @@ abstract class BaseController
         include "views/$fichier";
         include "public/footer.html.php";
     }
+    public function renderAdminTemplate($fichier, array $parametres = [])
+    {
+        extract($parametres);
+
+        include "public/headerAdmin.html.php";
+        include "views/$fichier";
+        include "public/footer.html.php";
+        include "public/navAdmin.html.php";
+    }
 
     public function getUser()
     {

@@ -17,7 +17,7 @@ class BaseRepository
     }
     public function findAll(BaseEntity $table): ?array
     {
-        $request = $this->dbConnection->query("SELECT * FROM $table");
+        $request = $this->dbConnection->query("SELECT * FROM $table WHERE is_deleted != 1");
         if ($request) {
             $class = "Model\Entity\\" . ucfirst($table);  // ucfirst : majuscule au début de la chaine de caractères
             return $request->fetchAll(\PDO::FETCH_CLASS, $class);
@@ -93,17 +93,20 @@ class BaseRepository
     public function setIsDeletedTrueById(BaseEntity $tableName)
     {
         $tableName->setIsDeleted(true);
-        $sql = "UPDATE $tableName 
-                SET type = :type, is_deleted = :isDeleted WHERE id = :id";
+        $tableNameString = (string) $tableName;
+        $sql = "UPDATE $tableNameString 
+                SET is_deleted = :isDeleted WHERE id = :id";
         $request = $this->dbConnection->prepare($sql);
         $request->bindValue(":id", $tableName->getId());
         $request->bindValue(":isDeleted", $tableName->getIsDeleted());
         $request = $request->execute();
+        var_dump($request);
         if ($request) {
             if ($request == 1) {
-                Sess::addMessage("success",  "La mise à jour de l'utilisateur a bien été éffectuée");
+                 Sess::addMessage("success",  "La mise à jour de l'utilisateur a bien été éffectuée");
                 return true;
             }
+                 
             Sess::addMessage("danger",  "Erreur : l'utilisateur n'a pas été mise à jour");
             return false;
         }

@@ -8,7 +8,7 @@ use Model\Entity\Users;
 use Model\Entity\ClientFreelanceRelations;
 use Model\Entity\Proposals;
 
-class ProposalsController extends BaseController
+class ProposalController extends BaseController
 {
     private ProposalsRepository $proposalsRepository;
     private ProposalsHandleRequest $form;
@@ -44,7 +44,7 @@ class ProposalsController extends BaseController
     {
         if (!empty($id) && is_numeric($id)) {
             $proposalRepository = new ProposalsRepository(); // Correction ici
-            $proposal = $proposalRepository->findById('proposal', $id);
+            $proposal = $proposalRepository->findById('proposals', $id);
             
             if (empty($proposal)) {
                 $this->setMessage("danger", "La proposition #$id n'existe pas");
@@ -70,7 +70,7 @@ class ProposalsController extends BaseController
 
             $this->proposalsRepository->addProposal($proposal);
             $this->setMessage("success", "Proposition ajoutée");
-            return redirection(addLink("User","dashboard_client"));
+            return redirection(addLink("User"));
 
 
             }
@@ -80,10 +80,38 @@ class ProposalsController extends BaseController
             $this->render("client\addProposals.html.php", [
                 "h1" => "Ajouter une proposition",
                 "proposal" => $proposal,
-                "errors" => $errors
+                "errors" => $errors,
+                "mode" => "insert"
 
             ]);
    
+    }
+    // MISE A JOUR PROPOSAL
+    public function editProposal($id){
+        if (!empty($id) && is_numeric($id)) {
+            $proposal = $this->proposalsRepository->findById('proposals', $id);
+            
+            $this->form->handleEditForm($proposal);
+
+            if ($this->form->isSubmitted() && $this->form->isValid()) {
+                $this->proposalsRepository->updateProposal($proposal);
+            }
+
+            $errors = $this->form->getErrorsForm();
+
+            $this->render("client\addProposals.html.php", [
+                "h1" => "Update Proposal n° $id",
+                "proposal" => $proposal,
+                "errors" => $errors,
+                "mode" => "update",
+            ]);
+            if (empty($proposal)) {
+                $this->setMessage("danger", "La proposition #$id n'existe pas");
+                redirection(addLink("Accueil"));
+            }
+        } else {
+            error("404.php");
+        }
     }
 }
 

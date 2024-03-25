@@ -127,7 +127,7 @@ hr{
             <br><br>
         <p>Tableau de Bord</p>
     <a href="#messages">Messages</a>
-    <a href="<?= addLink("Proposals","addProposals")?>">Ajouter une mission</a>
+    <a href="<?= addLink("Proposal","addProposals")?>">Ajouter une mission</a>
     <a href="index.php?page=addProposal">Gérer Mes Missions</a>
     <a href="#factures-paiements">Factures et Paiements</a>
     <a href="#mon-entreprise">Mon Entreprise</a>

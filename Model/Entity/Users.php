@@ -10,7 +10,6 @@ class Users extends BaseEntity
     private $email;
     private $numero_telephone;
     private $password_hash;
-    // private $created_at;
     private $date_de_naissance;
     private $genre;
     private $photo;
@@ -24,6 +23,7 @@ class Users extends BaseEntity
     private $code_postal;
     private $adresse;
     private $metier;
+    
    
     
 

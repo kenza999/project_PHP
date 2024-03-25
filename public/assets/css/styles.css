@@ -546,7 +546,7 @@ body{
     background: var(--body-color);
     /* color: var(--text-color); */
     position: relative;
-    display: flex;
+    /* display: flex; */
 
 }
 #menu{
@@ -601,13 +601,13 @@ body{
     font-weight: 300px;
     transition: 0.3s ease;
 }
-#interface{
+.interface{
     width: calc(100% - 300px);
     margin-left: 300px;
     position: relative;
 
 }
-#interface .navigation{
+.interface .navigation{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -616,8 +616,9 @@ body{
     border-bottom: 3px solid hsl(230, 75%, 56%);
     position: fixed;
     width: calc(100% - 300px);
+    top: 0;
 }
-#interface .navigation .search{
+.interface .navigation .search{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -625,25 +626,25 @@ body{
     border: 1px solid #d7dbe6;
     border-radius: 4px;
 }
-#interface .navigation .search i{
+.interface .navigation .search i{
     margin-right: 14px;
 }
-#interface .navigation .search input{
+.interface .navigation .search input{
     border: none;
     outline: none;
     font-size: 14px;
 }
-#interface .navigation .profile{
+.interface .navigation .profile{
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
-#interface .navigation .profile i{
+.interface .navigation .profile i{
     margin-right: 20px;
     font-size: 19px;
     font-weight: 400;
 }
-#interface .navigation .profile img{
+.interface .navigation .profile img{
     width: 30px;
     height: 30px;
     object-fit: cover;

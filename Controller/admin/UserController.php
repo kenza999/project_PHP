@@ -26,9 +26,11 @@ class UserController extends BaseController{
 if ($this->isUserConnected()) {
     switch ($this->getUser()->getRole()) {
         case ROLE_ADMIN:
-            // Afficher la vue du tableau de bord pour l'administrateur
-            $this->render("admin/dashboard_admin.html.php", [
-                "h1" => "Tableau de bord"
+            $users = $this->userRepository->findAll($this->user);
+         // Afficher la vue du tableau de bord pour l'administrateur
+            $this->renderAdminTemplate("admin/dashboard_admin.html.php", [
+                "h1" => "Tableau de bord",
+                "users" => $users
             ]);
             break;
         default:
@@ -46,7 +48,7 @@ if ($this->isUserConnected()) {
      {
          $users = $this->userRepository->findAll($this->user);
 
-          $this->render("admin/index.html.php", [
+          $this->renderAdminTemplate("admin/index.html.php", [
               "h1" => "Liste des utilisateurs",
              "users" => $users
          ]);
@@ -64,15 +66,17 @@ if ($this->isUserConnected()) {
 
         $errors = $this->form->getErrorsForm();
 
-        return $this->render("user/form.html.php", [
+        return $this->renderAdminTemplate("user/form.html.php", [
             "h1" => "Ajouter un nouvel utilisateur",
             "user" => $user,
             "errors" => $errors
         ]);
     }
+
+
     public function checkUser() {
         $user = $this->userRepository->getUserVerification();
-        $this->render("admin/verificationUser.html.php", [
+        $this->renderAdminTemplate("admin/verificationUser.html.php", [
             "h1" => "Verification de l'utilisateur",
             "user" => $user
         ]);
@@ -92,7 +96,7 @@ if ($this->isUserConnected()) {
             }
 
             $errors = $this->form->getErrorsForm();
-            return $this->render("user/form.html.php", [
+            return $this->renderAdminTemplate("user/form.html.php", [
                 "h1" => "Update de l'utilisateur n° $id",
                 "user" => $user,
                 "errors" => $errors
@@ -100,52 +104,35 @@ if ($this->isUserConnected()) {
         }
         return redirection("/errors/404.php");
     }
+    
+    
+    public function delete($id)
+    {
+        if (!empty($id) && $id && $this->getUser()) {
+            if (is_numeric($id)) {
 
-    public function isAdmin($id)
-{
-    // Vérifier si l'utilisateur connecté a le droit de supprimer un utilisateur
-    if ($this->getAdmin()) {
-        // Supprimer l'utilisateur de la base de données
-        if (!empty($id) && is_numeric($id)) {
-            if ($this->userRepository->setIsDeletedTrueById("users")) {
-                $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
+                $users = $this->userRepository->findById("users",$id);
+                 if(!empty($users)) {
+                    $this->userRepository->setIsDeletedTrueById($users);
+                    $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
+                    return redirection(addLink("user"));
+
+
+             }
+
             } else {
-                $this->setMessage("danger", "Une erreur s'est produite lors de la suppression de l'utilisateur.");
+                $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
             }
         } else {
-            $this->setMessage("danger", "L'utilisateur à supprimer n'a pas été trouvé.");
+            $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
         }
-    } else {
-        $this->setMessage("danger", "Vous n'avez pas les autorisations nécessaires pour supprimer un utilisateur.");
+
+        $this->renderAdminTemplate("admin/afficheUser.html.php", [
+            "h1" => "Suppresion de l'user n°$id ?",
+            "uses" => $users,
+            "mode" => "suppression"
+        ]);
     }
-
-    // Rediriger vers la liste des utilisateurs après la suppression
-    return redirection(addLink("admin", "user", "verificationUser"));
-}
-
-    // public function delete($id)
-    // {
-    //         // Vérifier si l'utilisateur connecté a le droit de supprimer un utilisateur
-    // if ($this->isAdmin()) {
-    //     // Supprimer l'utilisateur de la base de données
-    //     if (!empty($id) && is_numeric($id)) {
-    //         if ($this->userRepository->deleteUser($id)) {
-    //             $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
-    //         } else {
-    //             $this->setMessage("danger", "Une erreur s'est produite lors de la suppression de l'utilisateur.");
-    //         }
-    //     } else {
-    //         $this->setMessage("danger", "L'utilisateur à supprimer n'a pas été trouvé.");
-    //     }
-    // } else {
-    //     $this->setMessage("danger", "Vous n'avez pas les autorisations nécessaires pour supprimer un utilisateur.");
-    // }
-    //     $this->render("registration_form.html.php", [
-    //         "h1" => "Suppresion de l'user n°$id ?",
-    //         "user" => $user,
-    //         "mode" => "suppression"
-    //     ]);
-    // }
 
 
     public function show($id)
@@ -159,12 +146,40 @@ if ($this->isUserConnected()) {
                     $this->setMessage("danger",  "Erreur : Ce User n'existe pas");
                 }
     
-                $this->render("admin/afficheUser.html.php", [
+                $this->renderAdminTemplate("admin/afficheUser.html.php", [
                     "userfind" => $userfind, // Utilisez le nom correct de la variable
                     "h1" => "Fiche user"
                 ]);
                 
             }
         }
+    }
+
+    public function acceptUser($id)
+    {
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+
+                $users = $this->userRepository->findById("users",$id);
+                 if(!empty($users)) {
+                    $this->userRepository->checkUser($users);
+                    $this->setMessage("success", "L'utilisateur a été supprimé avec succès.");
+                    return redirection(addLink("user"));
+
+
+             }
+
+            } else {
+                $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+            }
+        } else {
+            $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
+        }
+
+        $this->renderAdminTemplate("admin/afficheUser.html.php", [
+            "h1" => "Suppresion de l'user n°$id ?",
+            "users" => $users,
+            "mode" => "suppression"
+        ]);
     }
 }

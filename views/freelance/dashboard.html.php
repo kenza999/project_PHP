@@ -135,21 +135,6 @@ hr{
         <hr>
     <a href="<?= addLink("user","logout")?>">Se déconnecter</a>
 </div>
-     <header>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Find Jobs</a></li>
-                <li><a href="#">Post Job</a></li>
-                <li><a href="#">My Account</a></li>
-                <li><a href="#">Support</a></li>
-                
-            </ul>
-        </nav>
-    </header> 
-  
-<div class="job-listings">
 
-    </div>
 </body>
 </html>

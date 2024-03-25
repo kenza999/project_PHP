@@ -10,8 +10,8 @@ class clientfreelancerelations extends BaseEntity
 
     private $RelationID;
     private $missionAccepter;
-    private Users $id_user;
-    private Proposals $ProjectID;
+    private $id_user;
+    private $ProjectID;
     
 
 

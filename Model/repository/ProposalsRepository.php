@@ -29,7 +29,12 @@ public function getAllProposals() {
 
     // Ajoute une nouvelle proposition à la base de données
     public function addProposal(Proposals $proposal) {
-        $query = "INSERT INTO proposals (missionName, description, budget, missionDuration, missionStart, remoteWork, location, skillsRequired, id_client) VALUES (:missionName, :description, :budget, :missionDuration, :missionStart, :remoteWork, :location, :skillsRequired, :id_client)";
+
+        $proposal->setId_client($_SESSION["user"]->getId());
+
+        $query = "INSERT INTO proposals (missionName, missionEnd, description, budget, missionDuration, missionStart, remoteWork, location, skillsRequired, id_client, created_at) VALUES (:missionName, :missionEnd, :description, :budget, :missionDuration, :missionStart, :remoteWork, :location, :skillsRequired, :id_client, NOW())";
+
+
         $request = $this->dbConnection->prepare($query);
         
         $request->bindValue(":missionName", $proposal->getMissionName()); 
@@ -37,6 +42,7 @@ public function getAllProposals() {
         $request->bindValue(":budget", $proposal->getBudget());
         $request->bindValue(":missionDuration", $proposal->getMissionDuration());
         $request->bindValue(":missionStart", $proposal->getMissionStart());
+        $request->bindValue(":missionEnd", $proposal->getMissionEnd());
         $request->bindValue(":remoteWork", $proposal->getRemoteWork());
         $request->bindValue(":location", $proposal->getLocation());
         $request->bindValue(":skillsRequired", $proposal->getSkillsRequired());
@@ -57,15 +63,27 @@ public function getAllProposals() {
     }
  
     // Met à jour une proposition existante
-    public function updateProposal(Proposals $proposals) {
-        $sql = "UPDATE proposals SET title = :title, description = :description, budget = :budget, deadline = :deadline WHERE id = :id";
-        $request = $this->dbConnection->prepare($sql);
 
-        $request->bindValue(':id', $id);
-        $request->bindValue(':title', $title);
-        $request->bindValue(':description', $description);
-        $request->bindValue(':budget', $budget);
-        $request->bindValue(':deadline', $deadline);
+
+
+
+
+     public function updateProposal(Proposals $proposal) {
+        
+         $sql = "UPDATE proposals SET missionName = :missionName, description = :description, budget = :budget,missionDuration = :missionDuration, missionStart = :missionStart, missionEnd = :missionEnd, remoteWork = :remoteWork, location = :location, skillsRequired = :skillsRequired  WHERE id = :id";
+         $request = $this->dbConnection->prepare($sql);
+
+       
+        $request->bindValue(":missionName", $proposal->getMissionName()); 
+        $request->bindValue(":description", $proposal->getDescription());
+        $request->bindValue(":budget", $proposal->getBudget());
+        $request->bindValue(":missionDuration", $proposal->getMissionDuration());
+        $request->bindValue(":missionStart", $proposal->getMissionStart());
+        $request->bindValue(":missionEnd", $proposal->getMissionEnd());
+        $request->bindValue(":remoteWork", $proposal->getRemoteWork());
+        $request->bindValue(":location", $proposal->getLocation());
+        $request->bindValue(":skillsRequired", $proposal->getSkillsRequired());
+        $request->bindValue(":id", $proposal->getId());
 
         $request = $request->execute();
         if ($request) {
@@ -81,38 +99,44 @@ public function getAllProposals() {
     }
 }
  
+
+
+
+
     // Supprime une proposition de la base de données
-    public function deleteProposal($id) {
-        $query = "DELETE FROM proposals WHERE id = :id";
-        $request = $this->dbConnection->prepare($sql);
-        $request->bindParam(':id', $id);
-        return $request->execute();
-    }
+
+
+//     public function deleteProposal($id) {
+//         $query = "DELETE FROM proposals WHERE id = :id";
+//         $request = $this->dbConnection->prepare($sql);
+//         $request->bindParam(':id', $id);
+//         return $request->execute();
+//     }
  
-     public static function getMissions()
-{
-    return $_SESSION["missions"] ?? [];
-}
+//      public static function getMissions()
+// {
+//     return $_SESSION["missions"] ?? [];
+// }
 
     // Accepte une mission et l'ajoute à la relation client-freelancer
-    public function acceptMission(Proposals $proposal) {
-        // Définir la requête SQL pour insérer une nouvelle relation client-freelancer
-        $query = "INSERT INTO clientfreelancerelations (id_user, ProjectID, missionAccepter) VALUES (:id_user, :ProjectID, NOW())"; 
-        $request = $this->dbConnection->prepare($query);
+    // public function acceptMission(Proposals $proposal) {
+    //     // Définir la requête SQL pour insérer une nouvelle relation client-freelancer
+    //     $query = "INSERT INTO clientfreelancerelations (id_user, ProjectID, missionAccepter) VALUES (:id_user, :ProjectID, NOW())"; 
+    //     $request = $this->dbConnection->prepare($query);
         
-        $request->bindValue(':id_user', $_SESSION["user"]->getId());
-        $request->bindValue(':ProjectID', $proposal->getId());
+    //     $request->bindValue(':id_user', $_SESSION["user"]->getId());
+    //     $request->bindValue(':ProjectID', $proposal->getId());
         
-        // Exécuter la requête
-        $result = $request->execute();
+    //     // Exécuter la requête
+    //     $result = $request->execute();
         
-        // Gérer les messages de session en fonction du résultat de l'opération
-        if ($result) {
-            Session::addMessage("success",  "La mission a été acceptée avec succès.");
-            return true;
-        } else {
-            Session::addMessage("danger",  "Erreur lors de l'acceptation de la mission.");
-            return false;
-        }
-    }
+    //     // Gérer les messages de session en fonction du résultat de l'opération
+    //     if ($result) {
+    //         Session::addMessage("success",  "La mission a été acceptée avec succès.");
+    //         return true;
+    //     } else {
+    //         Session::addMessage("danger",  "Erreur lors de l'acceptation de la mission.");
+    //         return false;
+    //     }
+    // }
 }

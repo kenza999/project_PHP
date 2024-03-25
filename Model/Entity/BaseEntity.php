@@ -4,11 +4,12 @@ namespace Model\Entity;
 
 abstract class BaseEntity
 {
-       protected $id;
-       protected $created_at;
-       protected $updated_at;
-       protected $is_deleted;
-
+    protected $id;
+    protected $created_at;
+    protected $updated_at;
+    protected $is_deleted;
+   
+  
 
     public function __toString()
     {
@@ -102,13 +103,9 @@ abstract class BaseEntity
      */ 
     public function setIsDeleted($isDeleted)
     {
-        $this->is_deleted = $isDeleted;
+        $this->is_deleted = $isDeleted !== null ? $isDeleted : 1; 
 
         return $this;
     }
 
 }
-
-
-
-// En résumé, cette classe fournit une structure de base pour les entités de votre modèle de données, en définissant les propriétés et les méthodes communes que chaque entité peut avoir. Les classes d'entités spécifiques peuvent étendre cette classe et ajouter leurs propres propriétés et méthodes spécifiques à leur contexte d'application.

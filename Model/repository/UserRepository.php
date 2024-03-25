@@ -133,7 +133,7 @@ public function loginUser($email) {
 }
 public function getUserVerification(){
     try {
-        $stmt = $this->dbConnection->prepare("SELECT * FROM users WHERE verificationUser = 'En attente'");
+        $stmt = $this->dbConnection->prepare("SELECT * FROM users WHERE verificationUser = 'En attente' AND is_deleted != 1");
         $stmt->execute();
         $row = $stmt->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
         return $row;
@@ -142,34 +142,46 @@ public function getUserVerification(){
         error_log("Erreur lors de la récupération des users non lues : " . $e->getMessage());
     }
 }
-public function incrementUserCount($data) {
+public function checkUser(Users $user){
     try {
-        for($i = 0; $i < count($data); $i++){
-            $i += 1;
-        }
-        return $i;
-        // $stmt = $this->dbConnection->prepare("SELECT COUNT(*) as NbUsers FROM users");
-        // $stmt->execute();        
-        // $row = $stmt->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
-        // return $row; 
-    } catch (\PDOException $e) {
-        // Gérer l'exception ici
-        return false; // Échec
-        error_log("Erreur lors de la récupération des users : " . $e->getMessage());
-    }
-}
-public function checkUser(){
-    try {
-    $sql = $this->dbConnection->prepare ("UPDATE users SET verificationUser = 'En attente' WHERE users.id = :id;");
+    $sql = $this->dbConnection->prepare ("UPDATE users SET verificationUser = 'Accepté' WHERE users.id = :id;");
     $sql->bindValue(':id', $user->getid());
     $sql->execute();
+    $row = $sql->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
+    var_dump($row);
+        return $row;
 } catch (PDOException $e) {
     // Gérer l'erreur ou la logger
     error_log("Erreur lors de la récupération des users non lues : " . $e->getMessage());
 }
 }
+public function afficheFreelance(Users $user) {
+    try{
+        $stmt = $this->dbConnection->prepare("SELECT * FROM users WHERE role = 'ROLE_USER' ");
+        $stmt->execute();
+        $row = $stmt->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
+        return $row;
+    }catch (PDOException $e) {
+        // Gérer l'erreur ou la logger
+        error_log("Erreur lors de la récupération des users non lues : " . $e->getMessage());
+    }
 }
 
+public function searchProfiles(Users $user){
+    try{
+        $stmt = $this->dbConnection->prepare("SELECT * FROM users WHERE metier LIKE '%:Metier%' OR  role = 'ROLE_USER'  ");
+        
+        $stmt->execute();
+        $row = $stmt->fetchAll(\PDO::FETCH_CLASS, "Model\Entity\Users");
+        return $row;
+    }catch (PDOException $e) {
+        // Gérer l'erreur ou la logger
+        error_log("Erreur lors de la récupération des users non lues : " . $e->getMessage());
+    }
+}
+
+
+}
 
 
 

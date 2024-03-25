@@ -6,7 +6,7 @@ require "inc/init.inc.php";
 URL: index.php?controller=user&method=update&id=32
 */
 $admin      = $_GET["doc"] ?? null;
-$controller = $_GET["controller"] ?? "home";
+$controller = $_GET["controller"] ?? "Accueil";
 $method     = $_GET["method"] ?? "list";
 $id         = $_GET["id"] ?? null;
 

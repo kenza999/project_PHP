@@ -26,7 +26,7 @@ if ($this->isUserConnected()) {
     switch ($this->getUser()->getRole()) {
         case ROLE_USER:
             // Afficher la vue du tableau de bord pour l'utilisateur
-            $this->render("dashboard.html.php", [
+            $this->render("freelance/dashboard.html.php", [
                 "h1" => "Tableau de bord"
             ]);
             break;
@@ -38,30 +38,21 @@ if ($this->isUserConnected()) {
             break;
         case ROLE_ADMIN:           
             $users = $this->userRepository->findAll($this->user);
-            $countUser = $this->userRepository->incrementUserCount($users);
          // Afficher la vue du tableau de bord pour l'administrateur
-            $this->render("admin/dashboard_admin.html.php", [
+            $this->renderAdminTemplate("admin/dashboard_admin.html.php", [
                 "h1" => "Tableau de bord",
-                "countUser" => $countUser,
                 "users" => $users
             ]);
             break;
         default:
             // Rediriger vers la page de connexion si le rôle n'est pas défini
-            return redirection(addLink("user", "login"));
+            return redirection(addLink("Accueil"));
     }
 } else {
     // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    return redirection(addLink("user", "login"));
+    return redirection(addLink("Accueil"));
 }
 
-    }
-
-    public function showRegistrationForm()
-    {
-        $this->render("registration/form.html.php", [
-            "h1" => "Inscription"
-        ]);
     }
 
     public function new()
@@ -103,8 +94,14 @@ if ($this->isUserConnected()) {
              "h1" => "Fiche user"
          ]);
      }
-
-
+    
+     public function afficheFreelance(){
+        $users = $this->userRepository->afficheFreelance($this->user);
+        $this->render("client/afficheFreelance.html.php",[
+            "users" => $users,
+            "h1" => "affiche user"
+        ]);  
+     }
     public function login()
     {
         // Vérifier si l'utilisateur est déjà connecté
@@ -147,7 +144,9 @@ if ($this->isUserConnected()) {
          if (!empty($id) && $id && $this->getUser()) {
              if (is_numeric($id)) {
 
-                 $user = $this->user;
+                 $user = $this->user; 
+                 if(!empty($user)) {
+                    $this->userRepository->setIsDeleteTrueById($user); 
              } else {
                  $this->setMessage("danger",  "ERREUR 404 : la page demandé n'existe pas");
              }
@@ -161,6 +160,7 @@ if ($this->isUserConnected()) {
              "mode" => "suppression"
          ]);
      }
+    }
      public function profile()
     {
     

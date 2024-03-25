@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'ajout de mission</title>
-    <link rel="stylesheet" href="Public/styles.css">
-</head>
-<body>
+
     <h1>Propositions</h1>
-<h2>Ajouter une nouvelle proposition</h2>
+<h2><?= $parametres["h1"] ?></h2>
  
  
  
 <form  method="post">
         <label for="missionName">Nom de la mission : </label><br />
-        <input type="text" id="missionName" name="missionName" required><br /><br />
+        <input type="text" id="missionName" name="missionName" value="<?= $proposal->getMissionName() ?>" required><br /><br />
  
  
         <label for="Description">Description : </label><br />
@@ -22,11 +14,14 @@
  
  
         <label for="missionDuration">Durée de la mission : </label><br />
-        <input type="text" id="missionDuration" name="missionDuration" required><br /><br />
+        <input type="number" id="missionDuration" name="missionDuration" required><br /><br />
  
         <label for="missionStart">Début : </label><br />
         <input type="date" id="missionStart" name="missionStart" required><br /><br />
- 
+
+<label for="missionEnd">Fin : </label><br />
+        <input type="date" id="missionEnd" name="missionEnd" required><br /><br />
+
         <label for="remoteWork">Télétravail (Oui/Non) : </label><br />
         <input type="text" id="remoteWork" name="remoteWork" required><br /><br />
        
@@ -39,9 +34,13 @@
         <label for="skillsRequired">Compétences requises : </label><br />
         <input type="text" id="skillsRequired" name="skillsRequired" required><br /><br />
  
-        <button type="submit" name="membre">Ajouter une mission</button>
+        <button type="submit" name="membre"><?= $mode == "update" ? "modifier la mission" : "Ajouter une mission" ?></button>
     </form>
+         
  
+<?php
+require "views/errors_form.html.php";
+?>
 <!-- Formulaire pour ajouter une nouvelle proposition -->
  
  

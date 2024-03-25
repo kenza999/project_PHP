@@ -70,7 +70,7 @@
             <div>
                 <p class="login__signup">You do not have an account? <a id="sign-up" href="#">Sign up</a></p>
                 <a href="#" class="login__forgot">Forgot your password?</a>
-                <button class="login__button" name="login">Log In</button>
+                <button class="login__button" name="login" type="submit">Log In</button>
             </div>
         </form>
         <i class="ri-close-line login__close" id="login-close"></i>

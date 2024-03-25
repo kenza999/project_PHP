@@ -6,18 +6,22 @@ use Model\Entity\Users;
 use Model\Repository\UserRepository;
 use Form\UserHandleRequest;
 use Controller\BaseController;
+use Model\Entity\competences;
 
 class AccueilController extends BaseController{
 
     private UserRepository $userRepository;
     private UserHandleRequest $registrationForm;
     private Users $user;
+    private competences $competences;
+    private
 
     public function __construct()
     {
         $this->user = new Users();
         $this->userRepository = new UserRepository();
         $this->registrationForm = new UserHandleRequest();
+        $this->competences = new competences();
     }
     public function list()
     {

@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Utilisateurs</title>
-    <!-- Inclure les styles Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Inclure FontAwesome pour les icônes -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
 
-<div class="container mt-5">
+<section class="interface">
     <h2>Liste des Utilisateurs Inscrits</h2>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -19,7 +7,6 @@
                 <th>ID</th>
                 <th>Role</th>
                 <th>Prenom</th>
-                <th>Mot de passe</th>
                 <th>Nom</th>
                 <th>Actions</th>
             </tr>
@@ -44,18 +31,12 @@
                         ?>
                     </td>
                     <td><?= $user->getUsername() ?></td>
-                    <td><?= $user->getPassword_hash() ? "****" : "" ?></td>
                     <td><?= $user->getNom() . " " . $user->getUsername() ?></td>
                     <td>
-<form action="" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-    <button type="submit" class="btn btn-danger btn-sm me-2">
-        <i class="fas fa-trash"></i> Supprimer
-    </button>
-</form>
+                    <a href="<?= addLink("admin", "user", "delete", $user->getId()) ?>" class="btn btn-secondary">
+    <i class="fa fa-trash"></i>
+</a>
 
-<a href="<?= addLink("admin", "user", "isAdmin").'/'.$user->getId() ?>" class="btn btn-danger btn-sm me-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </a>
                         <a href="<?= addLink("admin","user", "show").'/'.$user->getId()?>" class="btn btn-info btn-sm">
                             <i class="fas fa-eye"></i> Détails
                         </a>
@@ -64,8 +45,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</div>
+</section>
 
+<?php include __DIR__ . "/../views/message.html.php";?>
 <!-- Inclure le script Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
