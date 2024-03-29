@@ -6,26 +6,29 @@ use Model\Entity\Users;
 use Model\Repository\UserRepository;
 use Form\UserHandleRequest;
 use Controller\BaseController;
-use Model\Entity\competences;
+use Model\Entity\Competences;
+use Model\Repository\CompetencesRepository;
 
 class AccueilController extends BaseController{
 
     private UserRepository $userRepository;
     private UserHandleRequest $registrationForm;
     private Users $user;
-    private competences $competences;
-    private
+    private Competences $competences;
+    private CompetencesRepository $competencesRepository;
 
     public function __construct()
     {
         $this->user = new Users();
         $this->userRepository = new UserRepository();
         $this->registrationForm = new UserHandleRequest();
-        $this->competences = new competences();
+        $this->competences = new Competences();
+        $this->competencesRepository = new CompetencesRepository();
     }
     public function list()
     {
-
+        $competences = new competences;
+        $listeCompetences = $this->competencesRepository->findAll($competences);
         // Vérifier si l'utilisateur est déjà connecté
          if ($this->isUserConnected()) {
              /**
@@ -70,7 +73,8 @@ class AccueilController extends BaseController{
 
         // Afficher le formulaire de connexion avec les erreurs
             "h1" => "Entrez vos identifiants de connexion",
-            "errors" => $errors
+            "errors" => $errors,
+            "listeCompetences"=>$listeCompetences
         ]);
     }
     public function index()
@@ -105,7 +109,8 @@ class AccueilController extends BaseController{
 
         return $this->render("Accueil.html.php", [
             "h1" => "Entrez vos identifiants de connexion",
-            "errors" => $errors
+            "errors" => $errors,
+            "listeCompetences" => $listeCompetences
         ]);
     }
 }

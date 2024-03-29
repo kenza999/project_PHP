@@ -2,49 +2,30 @@
 
 namespace Model\Entity;
 
-use Model\Entity\competencefreelance;
+use Model\Entity\CompetenceFreelance;
 use Model\Entity\Users;
 
-class competences extends BaseEntity{
-    private $competenceID;
-    private $nom_competence;
+class Competences extends BaseEntity{
+    
+    private $NomCompetence;
 
+ 
     /**
-     * Get the value of competenceID
+     * Get the value of NomCompetence
      */ 
-    public function getCompetenceID()
+    public function getNomCompetence()
     {
-        return $this->competenceID;
+        return $this->NomCompetence;
     }
 
     /**
-     * Set the value of competenceID
+     * Set the value of NomCompetence
      *
      * @return  self
      */ 
-    public function setCompetenceID($competenceID)
+    public function setNomCompetence($NomCompetence)
     {
-        $this->competenceID = $competenceID;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of nom_competence
-     */ 
-    public function getNom_competence()
-    {
-        return $this->nom_competence;
-    }
-
-    /**
-     * Set the value of nom_competence
-     *
-     * @return  self
-     */ 
-    public function setNom_competence($nom_competence)
-    {
-        $this->nom_competence = $nom_competence;
+        $this->NomCompetence = $NomCompetence;
 
         return $this;
     }

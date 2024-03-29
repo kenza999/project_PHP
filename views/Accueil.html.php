@@ -55,6 +55,9 @@
         <i class="ri-close-line search__close" id="search-close"></i>
     </div>
 
+
+
+
     <!-- LOGIN -->
     <div class="login" id="login">
         <form class="login__form" method="post">
@@ -78,7 +81,7 @@
 
    <!-- REGISTER -->
    <div id="container">
-    <div class="register" id="register">
+    <div class="register "id="register">
         <form method="post" class="register__form">
             <h2 class="register__title">Sign Up</h2>
             <div class="register__group">
@@ -93,8 +96,6 @@
                 <label for="nom" class="register__label">Nom :</label>
                 <input type="text" placeholder="Nom" id="nom" class="form-control my-2 register__input" name="nom">
             </div>
-           
-        
             
             <div class="register__group_">
                 <div class="register__group">
@@ -108,6 +109,9 @@
                 <label for="carte_didentite" class="register__label">Carte d'identité :</label>
                 <input type="file" id="carte_didentite" name="carte_didentite" class="form-control-file my-2 register__input" accept="image/*" required>
             </div>
+
+
+
             <div class="register__group">
                 <label for="date_de_naissance" class="register__label">Date de naissance :</label>
                 <input type="date" placeholder="Date de naissance" id="date_de_naissance" class="form-control my-2 register__input" name="date_de_naissance">
@@ -146,6 +150,15 @@
                 <label for="metier" class="register__label">Metier :</label>
                 <input type="text" placeholder="Metier" id="metier" class="form-control my-2 register__input" name="metier">
             </div>
+            <div class="register__group">
+
+<?php foreach($listeCompetences as $competence){ ?> 
+    <input type="checkbox" value="<?php echo $competence->getCompetenceID()?>" name="competences[]" ><br/> 
+    <label for="competences" class="register__label booleen"><?php echo $competence->getNomCompetence()?></label><br> 
+    
+    <?php } ?>
+
+</div>
             <div class="register__group">
                 <label for="description_dutilisateur" class="register__label">Description :</label>
                 <textarea id="description_dutilisateur" name="description_dutilisateur" class="form-control my-2 register__input" placeholder="Description" required></textarea>

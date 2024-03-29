@@ -8,7 +8,7 @@
             <li><i class="fad fa-chart-pie-alt"></i><a href="<?= addLink("admin","User","dashboard_admin")?>">Dashboard</a></li>
             <li><i class="fab fa-uikit"></i><a href="<?= addLink("admin","User","checkUser")?>">verificationUser</a></li>
             <li><i class="fas fa-th-large"></i><a href="#">Tabls</a></li>
-            <li><i class="fas fa-edit"></i><a href="#">Forms</a></li>
+            <li><i class="fas fa-edit"></i><a href="<?= addLink("admin","Competences","findAll")?>">Affiche la liste des competences</a></li>
             <li><i class="fab fa-cc-visa"></i><a href="#">Cards</a></li>
             <li><i class="fas fa-hamburger"></i><a href="#">Modal</a></li>
             <li><i class="fas fa-chart-line"></i><a href="<?= addLink("admin","User","list")?>" class="list-group-item list-group-item-action">Liste des Utilisateurs</a></li>

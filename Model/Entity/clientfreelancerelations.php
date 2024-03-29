@@ -3,9 +3,9 @@
 namespace Model\Entity;
 
 use Model\Entity\Proposals;
-use Model\Entity\users;
+use Model\Entity\Users;
 
-class clientfreelancerelations extends BaseEntity
+class ClientFreelanceRelations extends BaseEntity
 {
 
     private $RelationID;

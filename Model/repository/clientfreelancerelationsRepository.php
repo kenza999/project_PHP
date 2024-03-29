@@ -2,10 +2,10 @@
 
 namespace Model\Repository;
 
-use Model\Entity\clientfreelancerelations;
+use Model\Entity\ClientFreelanceRelations;
 use Service\Session;
 
-class clientfreelancerelationsRepository extends BaseRepository{
+class ClientFreelanceRelationsRepository extends BaseRepository{
 
 
 }

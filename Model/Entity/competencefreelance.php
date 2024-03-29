@@ -5,7 +5,7 @@ namespace Model\Entity;
 use Model\Entity\users;
 use Model\Entity\competences;
 
-class competencefreelance extends BaseEntity{
+class CompetenceFreelance extends BaseEntity{
     private $competenceFreelanceID;
     private $competenceID;
     private $freelanceID;

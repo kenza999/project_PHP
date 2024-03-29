@@ -7,6 +7,9 @@ use Form\ProposalsHandleRequest;
 use Model\Entity\Users;
 use Model\Entity\ClientFreelanceRelations;
 use Model\Entity\Proposals;
+use Model\Entity\Competences;
+use Model\Repository\CompetencesRepository;
+use Model\Repository\ProposalCompetenceRepository;
 
 class ProposalController extends BaseController
 {
@@ -15,6 +18,9 @@ class ProposalController extends BaseController
     private Users $user;
     private ClientFreelanceRelations $clientFreelanceRelations;
     private Proposals $proposals;
+    private Competences $competences;
+    private CompetencesRepository $competencesRepository;
+    private ProposalCompetenceRepository $proposalCompetenceRepository;
   
     public function __construct()
     {
@@ -23,6 +29,9 @@ class ProposalController extends BaseController
         $this->user = new Users;
         $this->clientFreelanceRelations = new ClientFreelanceRelations;
         $this->proposals = new Proposals;
+        $this->competences = new Competences;
+        $this->competencesRepository = new CompetencesRepository;
+        $this->proposalCompetenceRepository = new ProposalCompetenceRepository;
     }
 
     public function listProposals()
