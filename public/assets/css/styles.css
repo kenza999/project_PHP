@@ -52,14 +52,10 @@ html {
 body,
 input,
 button {
-  font-family: var(--body-font);
-  font-size: var(--normal-font-size);
+  font-family: "Syne", sans-serif;
+  font-size: .938rem;
 }
-
-body {
-  background-color: var(--body-color);
-  color: var(--text-color);
-}
+ 
 
 input,
 button {
@@ -84,7 +80,7 @@ img {
 /*=============== REUSABLE CSS CLASSES ===============*/
 .container {
   max-width: 1120px;
-  margin-inline: 1.5rem;
+  /* margin-inline: 1.5rem; */
 }
 
 .main {
@@ -134,6 +130,9 @@ img {
     pointer-events: none;
     transition: opacity .4s;
     /*Ajout pour permettre le défilement vertical */
+}
+.block{
+    display: flex;
 }
 .search__close,
 .login__close,
@@ -445,7 +444,7 @@ img {
 }
 #container {
     position: relative;
-    right: 20%;
+    right: 0%;
     display: flex;
     flex-direction: row;
 } 
@@ -511,7 +510,6 @@ img {
 }
 /*----------- Code pour l'admin --------*/
 /*========= GOOGLE FONTS =========*/
-@import url('https://fonts.googleapis..com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root{
     --header-height: 3.5rem;
@@ -551,9 +549,9 @@ body{
     /* display: flex; */
 
 }
-#menu{
+#menu {
     background: #111827;
-    width: 300px;
+    width: 245px;
     height: 100%;
     position: fixed;
     top: 0;
@@ -767,4 +765,98 @@ tbody tr td{
 }
 #NomCompetence{
     margin: 10% 0 0 0;
+}
+        /* Styles pour le groupe d'enregistrement sur tous les appareils */
+        .register__group {
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        /* Media query pour les écrans petits */
+        @media (max-width: 768px) {
+            .register__group {
+                display: block; /* S'assure que le groupe est toujours affiché */ 
+              }
+}
+/*------ HEADER NAV ---------*/
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar nav {
+    padding-top: 20px;
+}
+
+.sidebar p {
+    color: #495057;
+    padding: 10px 16px;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+.sidebar a {
+    background-color: hsl(230, 100%, 97%);
+    color: #495057;
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 900;
+    border: 1px solid rgb(105, 149, 231);
+    border-radius: 15px 15px 15px 15px;
+    margin: 3px 3px;
+}
+
+.sidebar a:hover {
+    background-color: #f8f9fa;
+    color:  hsl(230, 75%, 56%);
+}
+.container{
+    width: 600px;
+    margin: auto;
+    margin-top: 50px;
+}
+.iconMS{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+.titre{
+    text-align: center;
+    font-size: bold;
+}
+@media (max-width: 768px) {
+.sidebar {
+width: 100%;
+height: auto;
+position: relative;
+display: none;
+}
+
+header {
+text-align: left;
+padding: 10px;
+}
+}
+
+@media (max-width: 576px) {
+.sidebar a {
+padding: 10px 15px;
+font-size: 14px;
+}
+
+.titre {
+font-size: 16px;
+}
 }

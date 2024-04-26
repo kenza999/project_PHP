@@ -5,6 +5,7 @@ namespace Form;
 use Service\Session as Sess;
 use Model\Entity\Proposals;
 use Model\Repository\ProposalsRepository;
+use Model\Entity\ProposalCompetence;
 
 class ProposalsHandleRequest extends BaseHandleRequest
 {
@@ -15,7 +16,7 @@ class ProposalsHandleRequest extends BaseHandleRequest
         $this->proposalsRepository  = new ProposalsRepository;
     }
 
-    public function handleInsertForm(Proposals $proposals)
+    public function handleInsertForm(Proposals $proposals, ProposalCompetence $proposalcompetence)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
@@ -49,9 +50,9 @@ class ProposalsHandleRequest extends BaseHandleRequest
             if (empty($location)) {
                 $errors[] = "La localisation ne peut pas être vide";
             }
-            if (empty($skillsRequired)) {
-                $errors[] = "Les compétences requises ne peuvent pas être vides";
-            }
+            // if (empty($skillsRequired)) {
+            //     $errors[] = "Les compétences requises ne peuvent pas être vides";
+            // }
     
     
             if (empty($errors)) {
@@ -63,8 +64,8 @@ class ProposalsHandleRequest extends BaseHandleRequest
                 $proposals->setMissionStart($missionStart);
                 $proposals->setMissionEnd($missionEnd);
                 $proposals->setLocation($location);
-                $proposals->setSkillsRequired($skillsRequired);
-                
+                // $proposals->setSkillsRequired($skillsRequired);
+                $proposalcompetence->setProposalCompetenceID($competences);
     
                 return $this;
             }

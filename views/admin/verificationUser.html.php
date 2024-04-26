@@ -1,7 +1,7 @@
 
 
 
-<section class="interface">
+<section class="container">
     <div class="board">
                 <table width="100%">
                     <thead><tbody>

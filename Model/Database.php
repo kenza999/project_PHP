@@ -6,7 +6,7 @@ class Database
 {
     // connetion à la base de données
     private $host = "localhost";
-    private $db_name = "portfolio_kenza";
+    private $db_name = "freelance-tech";
     private $username = "root";
     private $password = "";
     private $connetion = null;

@@ -1,140 +1,102 @@
-<?php
-
-
-// $proposals = new ProposalModel();
-?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Freelance Jobs Portal</title>
-    <link rel="stylesheet" type="text/css" href="../Public/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail de Missions Freelance</title>
+    <base href="<?= ROOT ?>">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
         body {
-    font-family: Arial, sans-serif;
-    
-}
+            font-family: 'cabin';
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
 
-header {
-    background-color: hsl(0, 0%, 87%);
-    color: white;
-    padding: 10px 0;
-    text-decoration: none;
-}
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
 
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-}
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            padding-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
 
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
+        .sidebar nav {
+            padding-top: 20px;
+        }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-}
+        .sidebar p {
+            color: #495057;
+            padding: 10px 16px;
+            margin-bottom: 0;
+            font-size: 18px;
+        }
 
-.job-listings {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-}
+        .sidebar a {
+            background-color: hsl(230, 100%, 97%);
+            color: #495057;
+            display: block;
+            padding: 20px 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 900;
+            /* border: 1px solid rgb(105, 149, 231); */
+            border-radius: 15px 15px 15px 15px;
+            margin: 3px 3px;
+        }
 
-.job-card {
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-    padding: 15px;
-    width: 300px;
-}
+        .sidebar a:hover {
+            background-color: #f8f9fa;
+            color:  hsl(230, 75%, 56%);
+        }
+        hr {
+            border: 0;
+            clear: both;
+            display: block;
+            width: 50%;
+            background-color: #6c757d;
+            height: 1px;
+            margin: 20px auto;
+        }
+        .iconMS{
+            width: 30px;
+            height: 30px;
+            padding: 5px;
+        }
+        .titre{
+            text-align: center;
+            font-size: bold;
+        }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
-
-footer ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin-right: 20px;
-}
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-  z-index: -1;
-}
-.sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color:  hsl(0, 0%, 87%);
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-.sidebar p {
-    color: hsl(0, 0%, 35%);
-    padding: 10px 16px;
-}
-
-.sidebar a {
-    padding: 6px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    color: hsl(0, 0%, 35%);
-    display: block;
-    text-decoration: none;
-}
-
-.sidebar a:hover {
-    color:  hsl(14, 98%, 50%);
-    text-decoration: none;
-}
-
-.content {
-    margin-left: 200px;
-    padding: 1px 16px ;
-    height: 1000px;
-}
-hr{
-    position: relative;
-    left: 50px;
-    width: 100px;
-}
 
     </style>
 </head>
 <body>
- 
-<div class="sidebar">
-            <br><br>
-        <p>Tableau de Bord</p>
-    <a href="<?= addLink("user","profile")?>">Profile</a>
-    <a href="#ameliorer-profil">Améliorer Mon Profil</a>
-    <a href="<?= addLink("Proposals","listProposals")?>">Gérer Mes Missions</a>
-    <a href="#factures-paiements">Factures et Paiements</a>
-    <a href="<?= addLink("user","siret")?>">Mon Entreprise</a>
-    <a href="<?= addLink("user","logout")?>">Mon Compte</a>
-        <hr>
-    <a href="<?= addLink("user","logout")?>">Se déconnecter</a>
-</div>
 
-</body>
-</html>
+    <div class="sidebar">
+        <nav>
+            <p class="titre"><strong>Tableau de Bord</strong></p>
+            <a href="<?= addLink("user","profile")?>"><img src="public/assets/img/message.png" class="iconMS" alt="">Mon profile</a>
+            <a href="#ameliorer-profil"><img src="public/assets/img/add.png" class="iconMS" alt="">Améliorer Mon Profil</a>
+            <a href="<?= addLink("Proposals","listProposals")?>"><img src="goal.png" class="iconMS" alt="">Gérer Mes Missions</a>
+            <a href="<?= addLink("user","factures")?>"><img src="public/assets/img/invoice.png" class="iconMS"alt="">Factures et Paiements</a>
+            <a href="<?= addLink("user","siret")?>"><img src="public/assets/img/office-building.png" alt="" class="iconMS">Mon Entreprise</a>
+            <a href="#"><img src="public/assets/img/user.png" class="iconMS" alt="">Mon Compte</a>
+            <hr>
+            <a href="<?= addLink("user","logout")?>">Se déconnecter</a>
+        </nav>
+    </div>
+

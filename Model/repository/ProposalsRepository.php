@@ -32,7 +32,7 @@ public function getAllProposals() {
 
         $proposal->setId_client($_SESSION["user"]->getId());
 
-        $query = "INSERT INTO proposals (missionName, missionEnd, description, budget, missionDuration, missionStart, remoteWork, location, skillsRequired, id_client, created_at) VALUES (:missionName, :missionEnd, :description, :budget, :missionDuration, :missionStart, :remoteWork, :location, :skillsRequired, :id_client, NOW())";
+        $query = "INSERT INTO proposals (missionName, missionEnd, description, budget, missionDuration, missionStart, remoteWork, location, id_client, created_at) VALUES (:missionName, :missionEnd, :description, :budget, :missionDuration, :missionStart, :remoteWork, :location, :id_client, NOW())";
 
 
         $request = $this->dbConnection->prepare($query);
@@ -45,14 +45,16 @@ public function getAllProposals() {
         $request->bindValue(":missionEnd", $proposal->getMissionEnd());
         $request->bindValue(":remoteWork", $proposal->getRemoteWork());
         $request->bindValue(":location", $proposal->getLocation());
-        $request->bindValue(":skillsRequired", $proposal->getSkillsRequired());
         $request->bindValue(":id_client", $proposal->getId_client());
 
         $request = $request->execute();
+        $idProposal = $this->dbConnection->lastInsertId();
+
+
       if ($request) {
         if ($request == 1) {
             Session::addMessage("success",  "La proposition a bien été ajoutée");
-            return true;
+            return $idProposal;
         }
         Session::addMessage("danger",  "Erreur : le produit n'a pas été enregisté");
             return false;
@@ -64,13 +66,9 @@ public function getAllProposals() {
  
     // Met à jour une proposition existante
 
-
-
-
-
      public function updateProposal(Proposals $proposal) {
         
-         $sql = "UPDATE proposals SET missionName = :missionName, description = :description, budget = :budget,missionDuration = :missionDuration, missionStart = :missionStart, missionEnd = :missionEnd, remoteWork = :remoteWork, location = :location, skillsRequired = :skillsRequired  WHERE id = :id";
+         $sql = "UPDATE proposals SET missionName = :missionName, description = :description, budget = :budget,missionDuration = :missionDuration, missionStart = :missionStart, missionEnd = :missionEnd, remoteWork = :remoteWork, location = :location WHERE id = :id";
          $request = $this->dbConnection->prepare($sql);
 
        
@@ -82,7 +80,6 @@ public function getAllProposals() {
         $request->bindValue(":missionEnd", $proposal->getMissionEnd());
         $request->bindValue(":remoteWork", $proposal->getRemoteWork());
         $request->bindValue(":location", $proposal->getLocation());
-        $request->bindValue(":skillsRequired", $proposal->getSkillsRequired());
         $request->bindValue(":id", $proposal->getId());
 
         $request = $request->execute();

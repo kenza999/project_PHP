@@ -200,26 +200,6 @@ class Proposals extends BaseEntity
     }
 
     /**
-     * Get the value of skillsRequired
-     */ 
-    public function getSkillsRequired()
-    {
-        return $this->skillsRequired;
-    }
-
-    /**
-     * Set the value of skillsRequired
-     *
-     * @return  self
-     */ 
-    public function setSkillsRequired($skillsRequired)
-    {
-        $this->skillsRequired = $skillsRequired;
-
-        return $this;
-    }
-
-    /**
      * Get the value of remoteWork
      */ 
     public function getRemoteWork()

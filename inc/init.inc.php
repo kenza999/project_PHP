@@ -12,7 +12,7 @@ define("ROLE_ENTREPRISE", "ROLE_ENTREPRISE");
 define("INSERTED", "Enregistrer"); 
 define("UPDATED", "Modifier"); 
 define("DELETED", "Spprimr"); 
-define("UPLOAD_PRODUCTS_IMG", "uploads/products/");
+define("UPLOAD_PRODUCTS_IMG", "uploads/Photo/");
 define("EN_ATTENTE", "En Attente");
 define("REFUSED", "Refusé");
 define("ACCEPTED", "Accepté");

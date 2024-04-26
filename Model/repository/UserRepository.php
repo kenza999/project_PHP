@@ -59,22 +59,13 @@ public function insertUser(Users $user)
     $request->bindValue(":ville", $user->getVille());
     $request->bindValue(":code_postal", $user->getCode_postal());
     $request->bindValue(":metier", $user->getMetier());
-
-
-    
     
     $result = $request->execute();
-    if ( $result) {
-        if ($request == 1){
-            Session::addMessage("success", "Le nouvel utilisateur a bien été enregistré");
-            return true;
-        }
-        Session::addMessage("danger", "Erreur : l'utilisateur n'a pas été enregistré");
-        return false;
-    }
-    Session::addMessage("danger",  "Erreur SQL");
-    return null;
-
+    
+    $Freelance = $this->dbConnection->lastInsertId();
+ 
+    return $Freelance;
+    
     }catch (PDOException $e){
         die($e->getMessage());
     }
@@ -82,33 +73,33 @@ public function insertUser(Users $user)
 
 public function updateUser(Users $user)
 {
-    $sql = "UPDATE users SET username = :username, nom = :nom, email = :email, password_hash = :password_hash, carte_didentite = :carte_didentite, date_de_naissance = :date_de_naissance, genre = :genre, photo = :photo, description_dutilisateur = :description_dutilisateur, nationalite = :nationalite, role = :role WHERE id = :id";
-    $request = $this->dbConnection->prepare($sql);
-    $request->bindValue(":username", $user->getUsername());
-    $request->bindValue(":nom", $user->getNom());
-    $request->bindValue(":email", $user->getEmail());
-    $request->bindValue(":password_hash", $user->getPassword_hash());
-    $request->bindValue(":carte_didentite", $user->getCarte_didentite());
-    $request->bindValue(":date_de_naissance", $user->getDateDeNaissance());
-    $request->bindValue(":metier", $user->getMetier());  
-    $request->bindValue(":genre", $user->getGenre());
-    $request->bindValue(":photo", $user->getPhoto());
-    $request->bindValue(":description_dutilisateur", $user->getDescriptionDutilisateur());
-    $request->bindValue(":nationalite", $user->getNationalite());
-    $request->bindValue(":id", $user->getId());
-    $request->bindValue(":role", $user->getRole());
-    $request = $request->execute();
-    if ($request) {
-        if ($request == 1) {
-            Session::addMessage("success",  "La mise à jour de l'utilisateur a bien été éffectuée");
+    // Préparation de la requête SQL pour mettre à jour un utilisateur
+    $sql = "UPDATE users SET numero_telephone = :numero_telephone, description_dutilisateur = :description_dutilisateur WHERE id = :id";
+    $stmt = $this->dbConnection->prepare($sql);
+
+    // Liaison des paramètres à la requête pour éviter les injections SQL
+    $stmt->bindValue(":numero_telephone", $user->getNumero_telephone(), \PDO::PARAM_INT);
+    $stmt->bindValue(":description_dutilisateur", $user->getDescription_dutilisateur(), \PDO::PARAM_STR);
+    $stmt->bindValue(":id", $user->getId(), \PDO::PARAM_INT);
+
+    // Exécution de la requête
+    $result = $stmt->execute();
+
+    // Vérification du résultat de la requête
+    if ($result) {
+        if ($stmt->rowCount() > 0) {
+            Session::addMessage("success", "La mise à jour de l'utilisateur a bien été effectuée");
             return true;
+        } else {
+            Session::addMessage("danger", "Aucune information n'a été modifiée.");
+            return false;  // Aucun enregistrement modifié
         }
-        Session::addMessage("danger",  "Erreur : l'utilisateur n'a pas été mise à jour");
-        return false;
+    } else {
+        Session::addMessage("danger", "Erreur SQL lors de la mise à jour de l'utilisateur.");
+        return null;  // Échec de l'exécution de la requête
     }
-    Session::addMessage("danger",  "Erreur SQL");
-    return null;
 }
+
 
 
 

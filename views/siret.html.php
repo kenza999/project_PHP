@@ -1,6 +1,6 @@
 
 
-
+    <section class="container">
 <form action="">
                         <p>SIRET : Vérifié</p>
                         <p>Numero de siret:
@@ -31,3 +31,6 @@
         <input type="text" name="code_postal" id="code_postal" class="form-control" value="<?= $user->getCode_postal()?>">
     </div>
 </form>
+    </section>
+    
+    

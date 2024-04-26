@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive navbar with search and login - Bedimcode</title>
-    <base href="<?= ROOT ?>">
     <!-- Remicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
-
+    <base href="<?= ROOT ?>">
     <!-- CSS -->
     <link rel="stylesheet" href="public/assets/css/styles.css">
     
@@ -15,6 +14,7 @@
 <body>
     <!-- HEADER -->
     <header class="header" id="header">
+        
         <nav class="nav container">
             <a href="#" class="nav__logo">Logo</a>
             <div class="nav__menu" id="nav-menu">
@@ -44,6 +44,8 @@
                 </div>
             </div>
         </nav>
+
+
     </header>
 
     <!-- SEARCH -->
@@ -57,6 +59,7 @@
 
 
 
+    <img src="..\public\assets\img\DiamantB.jpg" alt="" style="height: 100px; width: 250px;">
 
     <!-- LOGIN -->
     <div class="login" id="login">
@@ -82,7 +85,7 @@
    <!-- REGISTER -->
    <div id="container">
     <div class="register "id="register">
-        <form method="post" class="register__form">
+        <form method="post" class="register__form" enctype="multipart/form-data">
             <h2 class="register__title">Sign Up</h2>
             <div class="register__group">
                 <label for="email" class="register__label">Email :</label>
@@ -130,7 +133,7 @@
                 <input type="text" placeholder="Adresse" id="adresse" class="form-control my-2 register__input" name="adresse">
             </div>
             <div class="register__group">
-                <label for="ville" class="register__label">Numéro SIRET :</label>
+                <label for="ville" class="register__label">Ville de naissance :</label>
                 <input type="text" placeholder="Numéro SIRET" id="ville" class="form-control my-2 register__input" name="ville">
             </div>
             <div class="register__group">
@@ -150,15 +153,19 @@
                 <label for="metier" class="register__label">Metier :</label>
                 <input type="text" placeholder="Metier" id="metier" class="form-control my-2 register__input" name="metier">
             </div>
+           
+
+ 
             <div class="register__group">
 
 <?php foreach($listeCompetences as $competence){ ?> 
-    <input type="checkbox" value="<?php echo $competence->getCompetenceID()?>" name="competences[]" ><br/> 
+    <input type="checkbox" value="<?php echo $competence->getId()?>" name="competences[]" ><br/> 
     <label for="competences" class="register__label booleen"><?php echo $competence->getNomCompetence()?></label><br> 
     
     <?php } ?>
 
 </div>
+
             <div class="register__group">
                 <label for="description_dutilisateur" class="register__label">Description :</label>
                 <textarea id="description_dutilisateur" name="description_dutilisateur" class="form-control my-2 register__input" placeholder="Description" required></textarea>
@@ -174,9 +181,13 @@
                 <label for="nationalite" class="register__label">Nationalité :</label>
                 <select id="nationalite" name="nationalite" class="form-control my-2 register__input" required>
                     <option value="">Sélectionnez votre nationalité</option>
+                    <option value="anglais">Anglais(e)</option>
+                    <option value="algerien">Algerien(e)</option>
+                    <option value="amerique">Amérique(e)</option>
+                    <option value="antarctique">Antarctique(e)</option>
                     <option value="francaise">Français(e)</option>
                     <option value="americaine">Américain(e)</option>
-                    <option value="allemande">Allemand(e)</option>
+                    <option value="allemand">Allemand(e)</option>
                     <option value="britannique">Britannique</option>
                     <option value="canadienne">Canadien(ne)</option>
                     <option value="espagnole">Espagnole</option>
@@ -205,12 +216,8 @@
     </div>
    
 
-    <!-- MAIN -->
-    <main class="main">
-        <img src="img/bg-image.png" alt="" class="main__bg">
-    </main>
 
-    <!-- JavaScript -->
-    <script src="public/assets/js/main.js"></script>
+
+<script src="public/assets/js/main.js"></script>
 </body>
 </html>

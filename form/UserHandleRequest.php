@@ -3,6 +3,7 @@ namespace Form;
 
 use Service\Session as Sess;
 use Model\Entity\Users;
+use Model\Entity\CompetenceFreelance;
 use Model\Repository\UserRepository;
 
 class UserHandleRequest extends BaseHandleRequest
@@ -14,7 +15,7 @@ class UserHandleRequest extends BaseHandleRequest
         $this->userRepository  = new UserRepository;
     }
 
-    public function handleInsertForm(Users $user)
+    public function handleInsertForm(Users $user, CompetenceFreelance $freelance)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -82,6 +83,7 @@ class UserHandleRequest extends BaseHandleRequest
                 $user->setCode_postal($code_postal?? null);
                 $user->setAdresse($adresse?? null);
                 $user->setMetier($metier?? null);
+                $freelance->setCompetenceID($competences);
                 
 
 
@@ -130,6 +132,25 @@ class UserHandleRequest extends BaseHandleRequest
                 return $this;
             }
             
+            $this->setErrorsForm($errors);
+            return $this;
+        }
+    }
+    public function handleEditForm(Users $user){
+        if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_POST["Sauvegarde"])) {
+            
+            extract($_POST);
+            $errors = [];
+            if (empty($description_dutilisateur)){
+                $errors[] = "Veuillez saisir une description de l'utilisateur";
+            }if (empty($numero_telephone)){
+                $errors[] = "Veuillez saisir un numéro de téléphone";
+            }
+            if(empty($errors)){
+                $user->setDescription_dutilisateur($description_dutilisateur);
+                $user->setNumero_telephone($numero_telephone);
+               return $this;
+            }
             $this->setErrorsForm($errors);
             return $this;
         }

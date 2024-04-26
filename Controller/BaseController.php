@@ -10,8 +10,14 @@ abstract class BaseController
     public function render($fichier, array $parametres = [])
     {
         extract($parametres);
-
-        include "public/header.html.php";
+        // include "public/header.html.php";
+        include "views/$fichier";
+        include "public/footer.html.php";
+    }
+    public function renderCientTemplate($fichier, array $parametres = [])
+    {
+        extract($parametres);
+        include "public/headerClient.php";
         include "views/$fichier";
         include "public/footer.html.php";
     }

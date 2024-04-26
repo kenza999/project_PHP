@@ -1,23 +1,6 @@
 
-    <section id="interface">
-        <div class="navigation">
-            <div class="n1">
-                <div>
-                    <i id="menu-btn" class="far fa-bars"></i>
-                </div>
-                <div class="search">
-                    <i class="far fa-search"></i>
-                    <input type="text" placeholder="Search...">
-                </div>
-            </div>
-                <div class="profile">
-                    <i class="far fa-bell"></i>
-                    <img src="../public/assets/img/pexels-cz-jen-15613792.jpg" alt="">
-                </div>
-            </div>
-            <h3 class="i-name">
-                Dashboard
-            </h3>
+   
+           <section class="content">
             <div class="values">
                 <div class="val-box">
                      <i class="fas fa-users"></i>
@@ -53,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        
+     </section>
 
 
         

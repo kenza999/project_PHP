@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace Controller\Admin;
 
 use Controller\BaseController;
 use Model\Repository\ProposalsRepository;
@@ -12,7 +12,7 @@ use Model\Repository\CompetencesRepository;
 use Model\Repository\ProposalCompetenceRepository;
 use Model\Entity\ProposalCompetence;
 
-class ProposalController extends BaseController
+class ProposalsController extends BaseController
 {
     private ProposalsRepository $proposalsRepository;
     private ProposalsHandleRequest $form;
@@ -36,6 +36,15 @@ class ProposalController extends BaseController
         $this->proposalCompetenceRepository = new ProposalCompetenceRepository;
         $this->proposalcompetence = new ProposalCompetence;
     }
+    public function listProposals()
+    {
+        $proposals = $this->proposalsRepository->findAll($this->proposals);
+        
+        $this->renderAdminTemplate("admin/Proposals/listProposals.html.php", [
+            "h1" => "Liste des propositions",
+            "proposals" => $proposals
+        ]);
+    }
 
 
     public function new()
@@ -54,7 +63,7 @@ class ProposalController extends BaseController
                 redirection(addLink("Accueil"));
             }
             
-            $this->render("proposal/show.html.php", [
+            $this->render("admin/proposal/show.html.php", [
                 "proposal" => $proposal,
                 "h1" => "Fiche proposition"
             ]);
@@ -97,9 +106,6 @@ class ProposalController extends BaseController
     // MISE A JOUR PROPOSAL
     public function editProposal($id){
         if (!empty($id) && is_numeric($id)) {
-            $competences = new competences;
-        $listeCompetences = $this->competencesRepository->findAll($competences);
-
             $proposal = $this->proposalsRepository->findById('proposals', $id);
             
             $this->form->handleEditForm($proposal);
@@ -115,12 +121,29 @@ class ProposalController extends BaseController
                 "proposal" => $proposal,
                 "errors" => $errors,
                 "mode" => "update",
-                "listeCompetences" => $listeCompetences,
             ]);
             if (empty($proposal)) {
                 $this->setMessage("danger", "La proposition #$id n'existe pas");
                 redirection(addLink("Accueil"));
             }
+        } else {
+            error("404.php");
+        }
+    }
+    // voir une proposition de mission 
+    public function viewProposal($id){
+        if (!empty($id) && is_numeric($id)) {
+            $proposal = $this->proposalsRepository->findById('proposals', $id);
+            
+            if (empty($proposal)) {
+                $this->setMessage("danger", "La proposition #$id n'existe pas");
+                redirection(addLink("Accueil"));
+            }
+            
+            $this->renderAdminTemplate("admin/Proposals/viewProposal.html.php", [
+                "h1" => "Fiche proposition",
+                "proposal" => $proposal
+            ]);
         } else {
             error("404.php");
         }

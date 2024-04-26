@@ -1,6 +1,6 @@
 
 <body>
-    <div class="container mt-5">
+    <div class="container">
         <h1 class="mb-4"><?= $h1 ?></h1>
         <div class="card">
             <div class="card-header">

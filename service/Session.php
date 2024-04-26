@@ -15,13 +15,14 @@ abstract class Session
         $_SESSION["messages"][$type][] = $message;
     }
 
+
     public static function getMessages()
     {
         $messages = $_SESSION["messages"] ?? null;
 
         if (isset($_SESSION["messages"])) {
             unset($_SESSION["messages"]);
-        }
+        } 
         return $messages;
     }
 

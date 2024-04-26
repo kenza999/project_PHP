@@ -1,5 +1,5 @@
 
-<section class="interface">
+<section class="container">
     <h2>Liste des Utilisateurs Inscrits</h2>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">

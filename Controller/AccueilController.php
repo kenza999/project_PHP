@@ -5,9 +5,13 @@ namespace Controller;
 use Model\Entity\Users;
 use Model\Repository\UserRepository;
 use Form\UserHandleRequest;
+use Service\ImageHandler;
 use Controller\BaseController;
 use Model\Entity\Competences;
 use Model\Repository\CompetencesRepository;
+use Model\Repository\CompetenceFreelanceRepository;
+use Model\Entity\CompetenceFreelance;
+
 
 class AccueilController extends BaseController{
 
@@ -16,6 +20,8 @@ class AccueilController extends BaseController{
     private Users $user;
     private Competences $competences;
     private CompetencesRepository $competencesRepository;
+    private CompetenceFreelance $competenceFreelance;
+    private CompetenceFreelanceRepository $competenceFreelanceRepository;
 
     public function __construct()
     {
@@ -24,6 +30,8 @@ class AccueilController extends BaseController{
         $this->registrationForm = new UserHandleRequest();
         $this->competences = new Competences();
         $this->competencesRepository = new CompetencesRepository();
+        $this->competenceFreelance = new CompetenceFreelance();
+        $this->competenceFreelanceRepository = new CompetenceFreelanceRepository();
     }
     public function list()
     {
@@ -56,11 +64,13 @@ class AccueilController extends BaseController{
          }}else{
             $user = $this->user;
 
-            $this->registrationForm->handleInsertForm($user);
+            $this->registrationForm->handleInsertForm($user, $this->competenceFreelance);
     
             if ($this->registrationForm->isSubmitted() && $this->registrationForm->isValid()) {
-                
-                $this->userRepository->insertUser($user);
+                ImageHandler::handelPhoto($user);
+
+                $iDuser = $this->userRepository->insertUser($user);
+                $this->competenceFreelanceRepository->insertCompetenceFreelance($this->competenceFreelance, $iDuser);
                 return redirection(addLink("Accueil"));
             }
          }

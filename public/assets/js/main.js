@@ -8,6 +8,7 @@ navToggle.addEventListener('click', () => { // Ajoute un écouteur d'événement
     navMenu.classList.add('show-menu'); // Ajoute la classe 'show-menu' pour afficher le menu
 });
 
+
 /* Menu hidden */
 navClose.addEventListener('click', () => { // Ajoute un écouteur d'événements pour le clic sur le bouton de fermeture
     navMenu.classList.remove('show-menu'); // Supprime la classe 'show-menu' pour masquer le menu
@@ -26,12 +27,12 @@ searchBtn.addEventListener('click', () => { // Ajoute un écouteur d'événement
 
 /* Search hidden */
 searchClose.addEventListener('click', () => { // Ajoute un écouteur d'événements pour le clic sur le bouton de fermeture de la recherche
-search.classList.remove('show-search'); // Supprime la classe 'show-search' pour cacher la recherche
+search.classList.remove(-'show-search'); // Supprime la classe 'show-search' pour cacher la recherche
 });
 
-/*=============== LOGIN ===============*/
+/*=============== LOGIN =-==============*/
 const login = document.getElementById('login'),
-      loginBtn = document.getElementById('login-btn'),
+loginBtn = document.getElementById('login-btn'),
       loginClose = document.getElementById('login-close')    /* Login show */
       
 /* Login hidden */
